@@ -231,6 +231,38 @@
     object-fit: contain;
     border-radius: 6px;
   }
+  .warmup-card, .cardio-card {
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 13px;
+    margin-bottom: 10px;
+    line-height: 1.5;
+  }
+  .warmup-card { background: rgba(74, 222, 128, 0.08); border: 1px solid rgba(74, 222, 128, 0.3); color: #4ade80; }
+  .cardio-card { background: rgba(253, 224, 71, 0.08); border: 1px solid rgba(253, 224, 71, 0.3); color: #facc15; }
+  .ss-header {
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 16px; letter-spacing: 2px;
+    color: var(--type-color, var(--accent));
+    margin: 20px 0 8px;
+    padding: 8px 0 6px;
+    border-bottom: 1px dashed var(--border);
+  }
+  .ss-header .ss-rounds { font-family: 'Inter', sans-serif; font-size: 11px; letter-spacing: 1px; color: var(--text-muted); margin-left: auto; }
+  .ss-link { font-size: 18px; line-height: 1; }
+  .ss-why {
+    font-size: 12px;
+    color: var(--text-dim);
+    background: var(--bg-elevated);
+    border-left: 3px solid var(--type-color, var(--accent));
+    border-radius: 0 6px 6px 0;
+    padding: 9px 12px;
+    margin: -2px 0 12px;
+    line-height: 1.55;
+  }
+  .ss-why strong { color: var(--text); }
+  .ex-no-rest .exercise-meta span:nth-child(2) { color: var(--type-color, var(--accent)); font-weight: 700; }
   @keyframes frame0 {
     0%, 50% { opacity: 1; }
     50.01%, 100% { opacity: 0; }
@@ -407,7 +439,7 @@
 <header class="header">
   <div class="header-top">
     <div class="logo">RUTINA · LEO</div>
-    <div class="subtitle">PPL · 6 días</div>
+    <div class="subtitle">SUPERSERIES · 5 días</div>
   </div>
   <div class="user-info"><strong>183 cm · 160 kg · 36 años</strong> · Objetivo: bajar grasa</div>
   <div class="progress-container">
@@ -423,15 +455,24 @@
   <button class="reset-btn" onclick="resetDay()">REINICIAR PROGRESO DEL DÍA</button>
 
   <div class="notes-section">
-    <h3>NOTAS GENERALES</h3>
+    <h3>CÓMO EJECUTAR UNA SUPERSERIE</h3>
     <ul>
-      <li>Calentamiento: 5 min bici o elíptica + 1 serie ligera del primer ejercicio</li>
-      <li>Técnica primero: rango completo, 2-3 segundos en la fase excéntrica (bajando)</li>
-      <li>Cuando completes el rango alto de reps, sube el peso la siguiente sesión</li>
-      <li>Cardio post-pesas: 15-20 min caminadora con inclinación 8-12%, velocidad 4.5-5.5 km/h</li>
-      <li>Proteína: apunta a 200-220 g al día</li>
-      <li>Hidratación: 3-4 litros al día mínimo</li>
-      <li>Primeras 2 semanas: usa 3 series en vez de 4 para adaptación articular</li>
+      <li>Hacer ejercicio A completo (todas las reps)</li>
+      <li>Sin descanso, ir directo al ejercicio B</li>
+      <li>Al terminar B, descansar el tiempo indicado (60–90 seg)</li>
+      <li>Repetir hasta completar las 3 rondas</li>
+      <li>Pasar a la siguiente superserie del día</li>
+    </ul>
+  </div>
+  <div class="notes-section">
+    <h3>PRINCIPIOS CLAVE</h3>
+    <ul>
+      <li><strong>Progresión gradual:</strong> cada 2 semanas sube el peso un escalón si las 12 reps salieron fáciles.</li>
+      <li><strong>Fase negativa lenta:</strong> bajar el peso en 2–3 segundos activa más fibras que bajar rápido.</li>
+      <li><strong>Hidratación:</strong> 500 ml antes, un trago cada 15 min, 500 ml al terminar.</li>
+      <li><strong>Proteína post-entreno:</strong> en los 30–60 min siguientes (pollo, huevo, atún, whey).</li>
+      <li><strong>El músculo crece en el descanso:</strong> 7–8 h de sueño obligatorias.</li>
+      <li><strong>MÁXIMA al final:</strong> el quinto ejercicio se hace al fallo — todas las reps que puedas, baja el peso y sigue.</li>
     </ul>
   </div>
 </main>
@@ -488,84 +529,82 @@ const animations = {
 // ============== DATOS DE LA RUTINA ==============
 const routine = {
   lunes: {
-    type: 'push',
-    color: '#2563EB',
-    name: 'PECHO + TRÍCEPS',
-    desc: 'Pectoral · Tríceps',
+    type: "push",
+    color: "#2563EB",
+    name: "PECHO + TRÍCEPS",
+    desc: "Superseries · Pectoral · Tríceps",
+    warmup: "5 min en bicicleta estática a ritmo suave",
+    cardio: { velocidad: "5.5–6 km/h", inclinacion: "2%", nota: "Ritmo constante, no correr" },
     exercises: [
-      { name: 'Press de banca con mancuernas', sets: 3, reps: '12', rest: 60, primary: ['Pectoral mayor'], secondary: ['Deltoides anterior', 'Tríceps'], anim: 'chestPress', instr: "Máquina: Banca plana con mancuernas. Baja las mancuernas hasta que los codos queden a 90°. No rebotes en el pecho.", link: 'https://www.muscleandstrength.com/exercises/dumbbell-bench-press.html' },
-      { name: 'Press en máquina de pecho', sets: 3, reps: '12-15', rest: 60, primary: ['Pectoral mayor'], secondary: ['Deltoides anterior', 'Tríceps'], anim: 'chestPress', instr: "Máquina: Máquina de pecho (chest press). Ideal para principiantes: la máquina guía el movimiento y reduce riesgo de lesión.", link: 'https://www.muscleandstrength.com/exercises/machine-chest-press.html' },
-      { name: 'Aperturas en polea baja (cable fly)', sets: 3, reps: '15', rest: 60, primary: ['Pectoral mayor'], secondary: ['Deltoides anterior'], anim: 'crossOver', instr: "Máquina: Polea baja cruzada. Brazos ligeramente doblados, junta las manos al frente a la altura del pecho.", link: 'https://www.muscleandstrength.com/exercises/cable-crossover.html' },
-      { name: 'Extensión de tríceps en polea alta', sets: 3, reps: '15', rest: 60, primary: ['Tríceps'], secondary: [], anim: 'tricepPushdown', instr: "Máquina: Polea alta con cuerda o barra. Codos pegados al cuerpo, solo mueve el antebrazo hacia abajo.", link: 'https://www.muscleandstrength.com/exercises/tricep-rope-pushdown.html' },
-      { name: 'Press francés con mancuerna', sets: 3, reps: '12', rest: 60, primary: ['Tríceps'], secondary: [], anim: 'overheadTricep', instr: "Máquina: Banca plana + mancuerna. Mancuerna detrás de la cabeza, baja lento y sube sin bloquear el codo.", link: 'https://www.muscleandstrength.com/exercises/dumbbell-skull-crusher.html' },
+      { name: "Press de banca con barra", sets: 3, reps: "12", rest: 0, primary: ["Pectoral mayor"], secondary: ["Deltoides anterior", "Tríceps"], anim: "chestPress", instr: "Equipo: Banca plana + barra. El compuesto principal del día. Agarre al ancho de hombros, baja la barra hasta rozar el pecho. Codos a 45°, no abiertos. Sube explosivo.", link: "https://musclewiki.com/es-es/exercise/barbell-bench-press", group: { kind: "super", num: 1, slot: "A" } },
+      { name: "Extensión de tríceps en polea", sets: 3, reps: "15", rest: 60, primary: ["Tríceps"], secondary: [], anim: "tricepPushdown", instr: "Equipo: Polea alta con cuerda. Codos pegados al cuerpo, solo mueve el antebrazo hacia abajo.", link: "https://musclewiki.com/es-es/exercise/cable-tricep-pushdown-rope", group: { kind: "super", num: 1, slot: "B", porque: "Mientras el pecho descansa, trabajan los tríceps. Ambos empujan — sinergia perfecta." } },
+      { name: "Press inclinado con barra", sets: 3, reps: "12-15", rest: 0, primary: ["Pectoral superior"], secondary: ["Deltoides anterior", "Tríceps"], anim: "inclinePress", instr: "Equipo: Banca inclinada 45° + barra. Trabaja el pecho alto. Mismo patrón que la banca plana pero banca a 45°. Baja la barra a la parte alta del pecho, no a la garganta.", link: "https://musclewiki.com/es-es/exercise/barbell-incline-bench-press", group: { kind: "super", num: 2, slot: "A" } },
+      { name: "Press francés con mancuerna", sets: 3, reps: "12", rest: 60, primary: ["Tríceps"], secondary: [], anim: "overheadTricep", instr: "Equipo: Banca plana + mancuerna. Mancuerna detrás de la cabeza, baja lento y sube sin bloquear el codo.", link: "https://musclewiki.com/es-es/exercise/dumbbell-overhead-tricep-extension", group: { kind: "super", num: 2, slot: "B", porque: "Segunda ronda pecho + tríceps desde ángulo diferente. Fatiga completa." } },
+      { name: "Aperturas en polea cruzada (cable fly) — MÁXIMA", sets: 3, reps: "Al fallo", rest: 60, primary: ["Pectoral mayor"], secondary: [], anim: "crossOver", instr: "Equipo: Polea cruzada alta o baja. El cable mantiene tensión constante en el pecho todo el recorrido. Haz todas las reps hasta el fallo, baja el peso y sigue. Sales con el pecho completamente bombeado.", link: "https://musclewiki.com/es-es/exercise/cable-chest-fly", group: { kind: "solo" } },
     ]
   },
   martes: {
-    type: 'pull',
-    color: '#059669',
-    name: 'ESPALDA + BÍCEPS',
-    desc: 'Dorsal · Bíceps',
+    type: "pull",
+    color: "#059669",
+    name: "ESPALDA + BÍCEPS",
+    desc: "Superseries · Dorsal · Bíceps",
+    warmup: "5 min caminata tranquila en caminadora",
+    cardio: { velocidad: "5.5–6 km/h", inclinacion: "3%", nota: "Sube un poco la inclinación respecto al lunes" },
     exercises: [
-      { name: 'Jalón al pecho en polea', sets: 3, reps: '12', rest: 60, primary: ['Dorsal ancho'], secondary: ['Bíceps', 'Romboides'], anim: 'latPulldown', instr: "Máquina: Polea alta (lat pulldown). Agarre ancho, jala hasta la parte alta del pecho. Codos hacia abajo y atrás.", link: 'https://www.muscleandstrength.com/exercises/lat-pull-down.html' },
-      { name: 'Remo en máquina', sets: 3, reps: '12-15', rest: 60, primary: ['Dorsal ancho', 'Romboides'], secondary: ['Bíceps', 'Deltoides posterior'], anim: 'chestSupportedRow', instr: "Máquina: Máquina de remo sentado. Espalda recta, jala hacia el abdomen. No te balancees.", link: 'https://www.muscleandstrength.com/exercises/machine-row.html' },
-      { name: 'Remo en polea baja con agarre neutro', sets: 3, reps: '12', rest: 60, primary: ['Dorsal ancho', 'Romboides'], secondary: ['Bíceps'], anim: 'cableRow', instr: "Máquina: Polea baja con triángulo. Contrae la espalda al llegar al cuerpo. Pausa 1 segundo.", link: 'https://www.muscleandstrength.com/exercises/seated-cable-row.html' },
-      { name: 'Curl de bíceps con mancuernas', sets: 3, reps: '12', rest: 60, primary: ['Bíceps braquial'], secondary: ['Braquial'], anim: 'bicepCurl', instr: "Máquina: Mancuernas de pie. No balancees el torso. Sube lento, baja más lento todavía.", link: 'https://www.muscleandstrength.com/exercises/dumbbell-bicep-curl.html' },
-      { name: 'Curl martillo alternado', sets: 3, reps: '12 c/lado', rest: 60, primary: ['Braquial', 'Braquiorradial'], secondary: ['Bíceps'], anim: 'hammerCurl', instr: "Máquina: Mancuernas de pie. Agarre neutro (como sosteniendo un martillo). Trabaja el braquial.", link: 'https://www.muscleandstrength.com/exercises/alternate-hammer-curl.html' },
+      { name: "Jalón al pecho en polea", sets: 3, reps: "12", rest: 0, primary: ["Dorsal ancho"], secondary: ["Bíceps", "Romboides"], anim: "latPulldown", instr: "Equipo: Polea alta (lat pulldown). Agarre ancho, jala hasta la parte alta del pecho. Codos hacia abajo y atrás.", link: "https://musclewiki.com/es-es/exercise/cable-lat-pulldown", group: { kind: "super", num: 1, slot: "A" } },
+      { name: "Curl de bíceps con mancuernas", sets: 3, reps: "12", rest: 60, primary: ["Bíceps braquial"], secondary: ["Braquial"], anim: "bicepCurl", instr: "Equipo: Mancuernas de pie. No balancees el torso. Sube lento, baja más lento todavía.", link: "https://musclewiki.com/es-es/exercise/dumbbell-curl", group: { kind: "super", num: 1, slot: "B", porque: "Combinación clásica. El jalón ya activa el bíceps, así que el curl remata el trabajo." } },
+      { name: "Remo en máquina", sets: 3, reps: "12-15", rest: 0, primary: ["Dorsal ancho", "Romboides"], secondary: ["Bíceps", "Deltoides posterior"], anim: "chestSupportedRow", instr: "Equipo: Máquina de remo sentado. Espalda recta, jala hacia el abdomen. No te balancees.", link: "https://musclewiki.com/es-es/exercise/machine-row", group: { kind: "super", num: 2, slot: "A" } },
+      { name: "Curl martillo alternado", sets: 3, reps: "12 c/lado", rest: 60, primary: ["Braquial", "Braquiorradial"], secondary: ["Bíceps"], anim: "hammerCurl", instr: "Equipo: Mancuernas de pie. Agarre neutro (como sosteniendo un martillo). Trabaja el braquial.", link: "https://musclewiki.com/es-es/exercise/dumbbell-hammer-curl", group: { kind: "super", num: 2, slot: "B", porque: "Remo trabaja dorsal y romboides. El martillo trabaja el braquial — músculo diferente, cero interferencia." } },
+      { name: "Curl de bíceps con mancuernas — MÁXIMA", sets: 3, reps: "Al fallo", rest: 60, primary: ["Bíceps braquial"], secondary: [], anim: "bicepCurl", instr: "Equipo: Mancuernas de pie. Haz todas las reps que puedas con buena forma. Al fallar, baja el peso y sigue. Bíceps es el músculo pequeño del día — sales con los brazos bombeados.", link: "https://musclewiki.com/es-es/exercise/dumbbell-curl", group: { kind: "solo" } },
     ]
   },
   miercoles: {
-    type: 'legs',
-    color: '#7C3AED',
-    name: 'PIERNAS + GLÚTEOS',
-    desc: 'Cuádriceps · Glúteo · Gemelo',
+    type: "legs",
+    color: "#7C3AED",
+    name: "PIERNAS + GLÚTEOS",
+    desc: "Superseries · Cuádriceps · Glúteo · Gemelo",
+    warmup: "5 min en bicicleta estática, resistencia media",
+    cardio: { velocidad: "4.5–5 km/h", inclinacion: "4%", nota: "Inclinación alta, velocidad baja — las piernas ya trabajaron" },
     exercises: [
-      { name: 'Prensa de pierna', sets: 4, reps: '12', rest: 90, primary: ['Cuádriceps', 'Glúteo'], secondary: ['Isquiotibiales'], anim: 'legPress', instr: "Máquina: Leg press. Pies al ancho de hombros. No bloquees las rodillas al extender. Baja lento.", link: 'https://www.muscleandstrength.com/exercises/leg-press.html' },
-      { name: 'Extensión de cuádriceps en máquina', sets: 3, reps: '15', rest: 60, primary: ['Cuádriceps'], secondary: [], anim: 'legExtension', instr: "Máquina: Leg extension. Contrae el cuádriceps arriba y sostén 1 segundo antes de bajar.", link: 'https://www.muscleandstrength.com/exercises/leg-extensions.html' },
-      { name: 'Curl femoral en máquina (acostado)', sets: 3, reps: '12', rest: 60, primary: ['Isquiotibiales'], secondary: ['Gemelos'], anim: 'legCurl', instr: "Máquina: Leg curl tumbado. No levantes las caderas. Enfócate en contraer el isquiotibial.", link: 'https://www.muscleandstrength.com/exercises/leg-curl.html' },
-      { name: 'Hip thrust en máquina o con barra', sets: 3, reps: '15', rest: 75, primary: ['Glúteo mayor'], secondary: ['Isquiotibiales'], anim: 'hipThrust', instr: "Máquina: Hip thrust o banca + barra. Aprieta el glúteo arriba y sostén 2 segundos. El movimiento más efectivo para glúteo.", link: 'https://www.muscleandstrength.com/exercises/barbell-hip-thrust.html' },
-      { name: 'Pantorrillas de pie en máquina', sets: 4, reps: '20', rest: 45, primary: ['Gastrocnemio'], secondary: ['Sóleo'], anim: 'calfRaise', instr: "Máquina: Calf raise machine. Sube en 1 segundo, baja en 3 segundos. Rango completo de movimiento.", link: 'https://www.muscleandstrength.com/exercises/standing-calf-raise.html' },
+      { name: "Extensión de cuádriceps en máquina", sets: 3, reps: "15", rest: 0, primary: ["Cuádriceps"], secondary: [], anim: "legExtension", instr: "Equipo: Leg extension. Contrae el cuádriceps arriba y sostén 1 segundo antes de bajar.", link: "https://musclewiki.com/es-es/exercise/machine-leg-extension", group: { kind: "super", num: 1, slot: "A" } },
+      { name: "Curl femoral acostado", sets: 3, reps: "12", rest: 75, primary: ["Isquiotibiales"], secondary: ["Gemelos"], anim: "legCurl", instr: "Equipo: Leg curl tumbado. No levantes las caderas. Enfócate en contraer el isquiotibial.", link: "https://musclewiki.com/es-es/exercise/machine-lying-leg-curl", group: { kind: "super", num: 1, slot: "B", porque: "Antagonistas perfectos. Cuádriceps vs isquiotibiales — mientras uno trabaja el otro descansa activamente." } },
+      { name: "Hip thrust con barra", sets: 3, reps: "15", rest: 0, primary: ["Glúteo mayor"], secondary: ["Isquiotibiales"], anim: "hipThrust", instr: "Equipo: Banca + barra o hip thrust machine. Aprieta el glúteo arriba y sostén 2 segundos. El movimiento más efectivo para glúteo.", link: "https://musclewiki.com/es-es/exercise/barbell-hip-thrust", group: { kind: "super", num: 2, slot: "A" } },
+      { name: "Pantorrillas de pie en máquina", sets: 3, reps: "20", rest: 75, primary: ["Gastrocnemio"], secondary: ["Sóleo"], anim: "calfRaise", instr: "Equipo: Calf raise machine. Sube en 1 segundo, baja en 3 segundos. Rango completo de movimiento.", link: "https://musclewiki.com/es-es/exercise/machine-standing-calf-raise", group: { kind: "super", num: 2, slot: "B", porque: "Glúteos y gemelos no se interfieren en nada. Se alternan sin afectar el rendimiento." } },
+      { name: "Pantorrillas de pie en máquina — MÁXIMA", sets: 3, reps: "Al fallo", rest: 60, primary: ["Gastrocnemio"], secondary: ["Sóleo"], anim: "calfRaise", instr: "Equipo: Calf raise machine. Gemelos es el músculo pequeño del día. Haz todas las reps posibles. Al fallar baja el peso y continúa. Sube en 1 seg, baja en 3 — sales con las pantorrillas ardiendo.", link: "https://musclewiki.com/es-es/exercise/machine-standing-calf-raise", group: { kind: "solo" } },
     ]
   },
   jueves: {
-    type: 'push',
-    color: '#DC2626',
-    name: 'HOMBROS + TRAPECIO',
-    desc: 'Deltoides · Trapecio',
+    type: "delts",
+    color: "#DC2626",
+    name: "HOMBROS + TRAPECIO",
+    desc: "Superseries · Deltoides · Trapecio",
+    warmup: "5 min elíptica a ritmo suave",
+    cardio: { velocidad: "5.5–6 km/h", inclinacion: "2%", nota: "Ritmo moderado, recuperación activa" },
     exercises: [
-      { name: 'Press de hombros en máquina', sets: 3, reps: '12', rest: 60, primary: ['Deltoides anterior y medio'], secondary: ['Tríceps'], anim: 'shoulderPress', instr: "Máquina: Shoulder press machine. Para principiantes es más seguro que la barra. Espalda pegada al respaldo.", link: 'https://www.muscleandstrength.com/exercises/seated-machine-shoulder-press.html' },
-      { name: 'Elevaciones laterales con mancuernas', sets: 3, reps: '15', rest: 60, primary: ['Deltoides medio'], secondary: [], anim: 'lateralRaise', instr: "Máquina: Mancuernas de pie. Codos ligeramente doblados, sube hasta la altura del hombro. Sin impulso.", link: 'https://www.muscleandstrength.com/exercises/dumbbell-lateral-raise.html' },
-      { name: 'Elevaciones frontales con mancuernas', sets: 3, reps: '12', rest: 60, primary: ['Deltoides anterior'], secondary: [], anim: '', instr: "Máquina: Mancuernas de pie. Alterna brazos. No subas más arriba del hombro.", link: 'https://www.muscleandstrength.com/exercises/dumbbell-front-raise.html' },
-      { name: 'Face pull en polea alta', sets: 3, reps: '15', rest: 60, primary: ['Deltoides posterior', 'Trapecio medio'], secondary: ['Romboides', 'Rotadores externos'], anim: 'facePull', instr: "Máquina: Polea alta con cuerda. Jala hacia la cara, codos arriba. Protege el manguito rotador. Muy importante para principiantes.", link: 'https://www.muscleandstrength.com/exercises/face-pull.html' },
-      { name: 'Encogimientos con mancuernas (trapecio)', sets: 3, reps: '15', rest: 60, primary: ['Trapecio superior'], secondary: [], anim: '', instr: "Máquina: Mancuernas de pie. Solo sube y baja los hombros. No gires el cuello.", link: 'https://www.muscleandstrength.com/exercises/dumbbell-shrug.html' },
+      { name: "Elevaciones laterales con mancuernas", sets: 3, reps: "15", rest: 0, primary: ["Deltoides medio"], secondary: [], anim: "lateralRaise", instr: "Equipo: Mancuernas de pie. Codos ligeramente doblados, sube hasta la altura del hombro. No uses impulso.", link: "https://musclewiki.com/es-es/exercise/dumbbell-lateral-raise", group: { kind: "super", num: 1, slot: "A" } },
+      { name: "Encogimientos con mancuernas", sets: 3, reps: "15", rest: 60, primary: ["Trapecio superior"], secondary: [], anim: "", instr: "Equipo: Mancuernas de pie. Solo sube y baja los hombros. No gires el cuello.", link: "https://musclewiki.com/es-es/exercise/dumbbell-shrug", group: { kind: "super", num: 1, slot: "B", porque: "Hombro lateral y trapecio son músculos completamente diferentes. Se alternan sin ninguna interferencia." } },
+      { name: "Elevaciones frontales con mancuernas", sets: 3, reps: "12", rest: 0, primary: ["Deltoides anterior"], secondary: [], anim: "", instr: "Equipo: Mancuernas de pie (alternado). Alterna brazos. No subas más arriba del hombro.", link: "https://musclewiki.com/es-es/exercise/dumbbell-front-raise", group: { kind: "super", num: 2, slot: "A" } },
+      { name: "Face pull en polea", sets: 3, reps: "15", rest: 60, primary: ["Deltoides posterior", "Trapecio medio"], secondary: ["Romboides", "Rotadores externos"], anim: "facePull", instr: "Equipo: Polea alta con cuerda. Jala hacia la cara, codos arriba. Protege el manguito rotador. Muy importante para principiantes.", link: "https://musclewiki.com/es-es/exercise/cable-face-pull", group: { kind: "super", num: 2, slot: "B", porque: "Frente vs posterior del hombro — trabajan los tres haces del deltoides en una sola superserie." } },
+      { name: "Elevaciones laterales con mancuernas — MÁXIMA", sets: 3, reps: "Al fallo", rest: 60, primary: ["Deltoides medio"], secondary: [], anim: "lateralRaise", instr: "Equipo: Mancuernas ligeras de pie. Hombros es el músculo pequeño del día. Usa un peso ligero y lleva hasta el fallo total. Al fallar, baja el peso y sigue. Sales con los hombros redondos y bombeados.", link: "https://musclewiki.com/es-es/exercise/dumbbell-lateral-raise", group: { kind: "solo" } },
     ]
   },
   viernes: {
-    type: 'fullbody',
-    color: '#D97706',
-    name: 'FULL BODY + CORE',
-    desc: 'Cuerpo completo · Abdominal',
+    type: "full",
+    color: "#D97706",
+    name: "FULL BODY + CORE",
+    desc: "Superseries · Cuerpo completo · Abdominal",
+    warmup: "5 min caminata en caminadora, inclinación 0",
+    cardio: { velocidad: "6–6.5 km/h", inclinacion: "3%", nota: "El día más intenso de cardio — terminan la semana fuerte" },
     exercises: [
-      { name: 'Sentadilla en máquina Smith', sets: 3, reps: '12', rest: 75, primary: ['Cuádriceps', 'Glúteo'], secondary: ['Isquiotibiales', 'Core'], anim: 'hackSquat', instr: "Máquina: Smith machine. Ideal para principiantes: la barra guiada permite aprender el patrón sin riesgo.", link: 'https://www.muscleandstrength.com/exercises/smith-machine-squat.html' },
-      { name: 'Remo con mancuerna (un brazo)', sets: 3, reps: '12 c/lado', rest: 60, primary: ['Dorsal ancho'], secondary: ['Bíceps', 'Deltoides posterior'], anim: 'seatedRow', instr: "Máquina: Mancuerna + banca. Apoya rodilla y mano en la banca. Jala el codo hacia el techo.", link: 'https://www.muscleandstrength.com/exercises/one-arm-dumbbell-row.html' },
-      { name: 'Press de banca inclinado en máquina', sets: 3, reps: '12', rest: 60, primary: ['Pectoral superior'], secondary: ['Deltoides anterior', 'Tríceps'], anim: 'inclinePress', instr: "Máquina: Máquina inclinada o banca 45°. Trabaja la parte alta del pecho. Refuerza lo de lunes.", link: 'https://www.muscleandstrength.com/exercises/incline-chest-press.html' },
-      { name: 'Plancha frontal', sets: 3, reps: '30-40 seg', rest: 45, primary: ['Core anterior'], secondary: ['Glúteo', 'Hombros'], anim: 'plank', instr: "Máquina: Suelo o colchoneta. Cuerpo recto como tabla. No dejes caer la cadera. Respira.", link: 'https://www.muscleandstrength.com/exercises/plank.html' },
-      { name: 'Crunch en polea alta', sets: 3, reps: '20', rest: 45, primary: ['Recto abdominal'], secondary: ['Oblicuos'], anim: 'cableCrunch', instr: "Máquina: Polea alta con cuerda. Arrodillado, jala hacia abajo contrayendo el abdomen. No es un ejercicio de cuello.", link: 'https://www.muscleandstrength.com/exercises/cable-crunch.html' },
+      { name: "Sentadilla en máquina Smith", sets: 3, reps: "12", rest: 0, primary: ["Cuádriceps", "Glúteo"], secondary: ["Isquiotibiales", "Core"], anim: "hackSquat", instr: "Equipo: Smith machine. La barra guiada permite aprender el patrón sin riesgo. Espalda recta.", link: "https://musclewiki.com/es-es/exercise/smith-machine-squat", group: { kind: "super", num: 1, slot: "A" } },
+      { name: "Plancha frontal", sets: 3, reps: "35 seg", rest: 75, primary: ["Core anterior"], secondary: ["Glúteo", "Hombros"], anim: "plank", instr: "Equipo: Suelo o colchoneta. Cuerpo recto como tabla. No dejes caer la cadera. Respira.", link: "https://musclewiki.com/es-es/exercise/plank", group: { kind: "super", num: 1, slot: "B", porque: "Piernas y core son músculos completamente diferentes. La plancha es isométrica — no fatiga las piernas." } },
+      { name: "Remo con mancuerna (un brazo)", sets: 3, reps: "12 c/lado", rest: 0, primary: ["Dorsal ancho"], secondary: ["Bíceps", "Deltoides posterior"], anim: "seatedRow", instr: "Equipo: Mancuerna + banca. Apoya rodilla y mano en la banca. Jala el codo hacia el techo.", link: "https://musclewiki.com/es-es/exercise/dumbbell-bent-over-row", group: { kind: "super", num: 2, slot: "A" } },
+      { name: "Crunch en polea alta", sets: 3, reps: "20", rest: 75, primary: ["Recto abdominal"], secondary: ["Oblicuos"], anim: "cableCrunch", instr: "Equipo: Polea alta con cuerda. Arrodillado, jala hacia abajo contrayendo el abdomen. No es un ejercicio de cuello.", link: "https://musclewiki.com/es-es/exercise/cable-crunch", group: { kind: "super", num: 2, slot: "B", porque: "Espalda y abdomen no se interfieren. Cierre perfecto de semana." } },
+      { name: "Curl inclinado con mancuernas — MÁXIMA", sets: 3, reps: "Al fallo", rest: 60, primary: ["Bíceps braquial"], secondary: [], anim: "bicepCurl", instr: "Equipo: Mancuernas en banca inclinada. La inclinación estira más el bíceps — más rango, más bombeo. Haz todas las reps hasta el fallo. El mejor cierre de semana posible para bíceps.", link: "https://musclewiki.com/es-es/exercise/dumbbell-incline-curl", group: { kind: "solo" } },
     ]
   },
-  sabado: {
-    type: 'rest',
-    color: '#4ade80',
-    name: 'DESCANSO',
-    desc: 'Recuperación total',
-    exercises: []
-  },
-  domingo: {
-    type: 'rest',
-    color: '#4ade80',
-    name: 'DESCANSO',
-    desc: 'Recuperación total',
-    exercises: []
-  }
+  sabado: { type: 'rest', color: '#4ade80', name: 'DESCANSO', desc: 'Recuperación total', warmup: '', cardio: null, exercises: [] },
+  domingo: { type: 'rest', color: '#4ade80', name: 'DESCANSO', desc: 'Recuperación total', warmup: '', cardio: null, exercises: [] }
 };
 
 // ============== ESTADO Y LÓGICA ==============
@@ -640,6 +679,25 @@ function renderSession() {
   }
 
   const totalSets = session.exercises.reduce((sum, e) => sum + e.sets, 0);
+  const supers = [...new Set(session.exercises.filter(e => e.group && e.group.kind === 'super').map(e => e.group.num))];
+
+  let body = '';
+  let lastGroup = null;
+  session.exercises.forEach((ex, i) => {
+    const g = ex.group || {};
+    if (g.kind === 'super' && g.slot === 'A' && g.num !== lastGroup) {
+      body += `<div class="ss-header" style="--type-color: ${session.color}"><span class="ss-link">⚡</span>SUPERSERIE ${g.num}<span class="ss-rounds">${ex.sets} rondas · sin descanso entre A y B</span></div>`;
+      lastGroup = g.num;
+    }
+    if (g.kind === 'solo' && lastGroup !== 'solo') {
+      body += `<div class="ss-header" style="--type-color: ${session.color}"><span class="ss-link">🎯</span>EJERCICIO FINAL · MÁXIMA<span class="ss-rounds">${ex.sets} series al fallo</span></div>`;
+      lastGroup = 'solo';
+    }
+    body += renderExercise(ex, i);
+    if (g.kind === 'super' && g.slot === 'B' && g.porque) {
+      body += `<div class="ss-why" style="--type-color: ${session.color}"><strong>Por qué esta combinación:</strong> ${g.porque}</div>`;
+    }
+  });
 
   content.innerHTML = `
     <div class="session-header" style="--type-color: ${session.color}">
@@ -647,12 +705,14 @@ function renderSession() {
       <h1 class="session-title">${session.name}</h1>
       <p class="session-desc">${session.desc}</p>
       <div class="session-stats">
+        <div class="stat"><span class="stat-value">${supers.length}</span><span class="stat-label">Superseries</span></div>
         <div class="stat"><span class="stat-value">${session.exercises.length}</span><span class="stat-label">Ejercicios</span></div>
         <div class="stat"><span class="stat-value">${totalSets}</span><span class="stat-label">Series</span></div>
-        <div class="stat"><span class="stat-value">~60</span><span class="stat-label">Min</span></div>
       </div>
+      ${session.warmup ? `<div class="warmup-card" style="margin-top:16px"><strong>Calentamiento (5 min):</strong> ${session.warmup}</div>` : ''}
+      ${session.cardio ? `<div class="cardio-card"><strong>🚶 Caminadora (15 min al final):</strong> ${session.cardio.velocidad} · Inclinación ${session.cardio.inclinacion} · ${session.cardio.nota}</div>` : ''}
     </div>
-    ${session.exercises.map((ex, i) => renderExercise(ex, i)).join('')}
+    ${body}
   `;
   updateProgress();
 }
@@ -671,14 +731,14 @@ function renderExercise(ex, idx) {
   `).join('');
 
   return `
-    <div class="exercise ${exProgress.expanded ? 'expanded' : ''} ${isCompleted ? 'completed' : ''}" id="ex-${idx}">
+    <div class="exercise ${exProgress.expanded ? 'expanded' : ''} ${isCompleted ? 'completed' : ''} ${ex.rest === 0 ? 'ex-no-rest' : ''}" id="ex-${idx}" style="--type-color: ${routine[currentDay].color}">
       <div class="exercise-header" onclick="toggleExercise(${idx})">
         <div class="exercise-number">${idx + 1}</div>
         <div class="exercise-main">
           <div class="exercise-name">${ex.name}</div>
           <div class="exercise-meta">
             <span>📊 ${ex.sets}×${ex.reps}</span>
-            <span>⏱ ${ex.rest}s</span>
+            <span>${ex.rest === 0 ? '→ sigue B' : `⏱ ${ex.rest}s`}</span>
             <span>✓ ${completedSets}/${ex.sets}</span>
           </div>
         </div>
@@ -715,7 +775,7 @@ function toggleSet(exIdx, setIdx, restTime) {
   progress[exKey].expanded = true;
   saveProgress();
   renderSession();
-  if (progress[exKey].sets[setIdx]) {
+  if (progress[exKey].sets[setIdx] && restTime > 0) {
     startTimer(restTime);
   }
 }
